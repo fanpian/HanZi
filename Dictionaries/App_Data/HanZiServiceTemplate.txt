@@ -1,0 +1,124 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace CoreExtended.HanZi
+{
+    /// <summary>
+    /// 汉字与拼音关联表
+    /// </summary>
+    public class HanZiPinYinEntity
+    {
+        /// <summary>
+        /// 汉字
+        /// </summary>
+        public string HanZi { get; set; } = string.Empty;
+
+        /// <summary>
+        /// GB18030编码
+        /// 从高位到低位
+        /// </summary>
+        public string GB18030 { get; set; } = string.Empty;
+
+        /// <summary>
+        /// unicode编码
+        /// 从高位到低位
+        /// </summary>
+        public string Unicode { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 拼音
+        /// </summary>
+        public string PinYin { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 带音标的拼音
+        /// </summary>
+        public string? YinBiao { get; set; }
+
+        /// <summary>
+        /// 首字母
+        /// 如果是Zh则是两个字符
+        /// </summary>
+        public string ShouZiMu { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 汉字的部首
+        /// </summary>
+        public string BuShou { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 汉字的繁体
+        /// </summary>
+        public string? ZhHant { get; set; }
+    }
+    
+    /// <summary>
+    /// 汉字服务
+    /// </summary>
+    public static class HanZiService
+    {
+        public static readonly List<HanZiPinYinEntity> _hanZis = new List<HanZiPinYinEntity>();
+        static HanZiService()
+        {
+**汉字拼音数据**
+        }
+
+        /// <summary>
+        /// 根据拼音获取汉字
+        /// </summary>
+        /// <param name="pinYin"></param>
+        /// <returns></returns>
+        public static List<HanZiPinYinEntity> GetHanZiByPinYin(string pinYin)
+        {
+            return _hanZis.Where(x => x.PinYin.Contains(pinYin)).ToList();
+        }
+
+        /// <summary>
+        /// 根据汉字获取拼音
+        /// </summary>
+        /// <param name="hanZi"></param>
+        /// <returns></returns>
+        public static List<string> GetPinYin(string hanZi)
+        {
+            List<string> pinYins = new List<string>();
+            for (int i = 0; i < hanZi.Length; i++)
+            {
+                HanZiPinYinEntity? hanZiPinYinEntity = _hanZis.FirstOrDefault(x => x.HanZi == hanZi);
+                pinYins.Add(hanZiPinYinEntity?.PinYin ?? string.Empty);
+            }
+            return pinYins;
+        }
+
+        /// <summary>
+        /// 根据汉字的繁体
+        /// </summary>
+        /// <param name="hanZi"></param>
+        /// <returns></returns>
+        public static List<string> GetHant(string hanZi)
+        {
+            List<string> pinYins = new List<string>();
+            for (int i = 0; i < hanZi.Length; i++)
+            {
+                HanZiPinYinEntity? hanZiPinYinEntity = _hanZis.FirstOrDefault(x => x.HanZi == hanZi);
+                pinYins.Add(hanZiPinYinEntity?.ZhHant ?? string.Empty);
+            }
+            return pinYins;
+        }
+
+        /// <summary>
+        /// 根据汉字
+        /// </summary>
+        /// <param name="hanZi"></param>
+        /// <returns></returns>
+        public static List<HanZiPinYinEntity?> GetEntity(string hanZi)
+        {
+            List<HanZiPinYinEntity?> pinYins = new List<HanZiPinYinEntity?>();
+            for (int i = 0; i < hanZi.Length; i++)
+            {
+                HanZiPinYinEntity? hanZiPinYinEntity = _hanZis.FirstOrDefault(x => x.HanZi == hanZi);
+                pinYins.Add(hanZiPinYinEntity);
+            }
+            return pinYins;
+        }
+    }
+}

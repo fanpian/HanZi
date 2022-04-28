@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="App_Data\HanZiServiceTemplate.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="App_Data\HanZiServiceTemplate.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dictionaries.Service\Dictionaries.Service.csproj" />
+  </ItemGroup>
+
+</Project>
